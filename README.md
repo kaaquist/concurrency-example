@@ -1,4 +1,4 @@
-Build Status ::: [![CircleCI](https://circleci.com/gh/kaaquist/concurrency-example.svg?style=svg)](https://circleci.com/gh/kaaquist/concurrency-example)
+[![CircleCI](https://circleci.com/gh/kaaquist/concurrency-example.png?style=shield)](https://circleci.com/gh/kaaquist/concurrency-example)
 
 concurrency-examples
 ======================
