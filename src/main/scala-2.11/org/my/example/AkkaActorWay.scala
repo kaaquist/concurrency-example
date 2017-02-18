@@ -50,12 +50,13 @@ class Ping(startcount: Int, pong: ActorRef) extends Actor {
         pong ! Stop
         //Problem getting the actors to stop.
         context.system.stop(self)
-        pong ! PoisonPill
+        context.system.terminate()
       }
   }
 }
 
 object AkkaActorWay extends App {
+
   val system = ActorSystem("AkkaActorSystem")
   val pong = system.actorOf(Props[Pong], name = "pong")
   val ping = system.actorOf(Props(new Ping(10000, pong)), name = "ping")
@@ -63,5 +64,7 @@ object AkkaActorWay extends App {
   // We make a 'tell' call not a 'ask' which should return a Future[T]
   ping ! Start
 }
+
+
 
 
