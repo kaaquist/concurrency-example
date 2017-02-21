@@ -36,22 +36,21 @@ object FutureAndPromiseWay extends App{
   //Example where we use Promise.
   val evenOrOdd = Promise[Boolean]
 
-  case class even(s: Boolean) {println("The number was even !!")}
-  case class odd(e: Throwable) {println("The number was odd !!")}
+  case class even(s: Boolean) {if(s){ println("The number was even !!")} else {println("The number was odd !!")}}
+  case class problem(e: Throwable) {println(s"We got a problem: ${e.toString}")}
 
   evenOrOdd.future.onComplete {
     case Success(s) => even(s)
-    case Failure(e) => odd(e)
+    case Failure(e) => problem(e)
   }
 
-  Future {
-    if (calculator.oddOrEven(Random.nextInt(20)))
-      evenOrOdd success true
-    else
-      evenOrOdd failure new NumberFormatException(s"We have an odd number!")
+  val ff = Future {
+    calculator.oddOrEven(Random.nextInt(20))
   }
+
+  evenOrOdd completeWith ff
 
   //This value is something we need to take into account.
-  Thread.sleep(1500)
+  Await.result(evenOrOdd.future, 1.5 second)
 }
 
